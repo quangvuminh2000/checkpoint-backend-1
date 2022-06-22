@@ -126,6 +126,7 @@ spring:
       hibernate.query.in_clause_parameter_padding: true
     hibernate:
       ddl-auto: update
+      show-sql: true
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
