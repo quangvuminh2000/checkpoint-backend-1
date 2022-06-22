@@ -10,7 +10,7 @@ import java.io.Serializable;
 * */
 @Entity
 @Table(name = "jhi Person")
-public class Person implements Serializable {
+public class Person extends AbstractAuditingEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -22,6 +22,13 @@ public class Person implements Serializable {
 
     @Column(name = "age")
     private Integer age;
+
+    public Person(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public Person() { }
 
     public Long getId() {
         return id;
@@ -60,7 +67,6 @@ public class Person implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
