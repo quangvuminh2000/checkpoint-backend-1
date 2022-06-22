@@ -9,11 +9,11 @@ import java.io.Serializable;
 * A Person
 * */
 @Entity
-@Table(name = "jhi Person")
+@Table(name = "jhi_Person")
 public class Person extends AbstractAuditingEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @SequenceGenerator(sequenceName = "person_sequence", name = "person_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_sequence")
     private Long id;
 
     @Size(max = 100)
