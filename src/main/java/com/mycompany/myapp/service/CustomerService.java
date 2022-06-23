@@ -36,12 +36,17 @@ public class CustomerService {
     }
 
     public List<Customer> getSameDob(String dob_string) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate dob = LocalDate.parse(dob_string, formatter);
+        LocalDate dob = this.StringToLocalDate(dob_string);
         return customerRepository.findAllByDob(dob);
     }
 
     public List<Customer> getSameCity(String city) {
         return customerRepository.findAllByCity(city);
+    }
+    private LocalDate StringToLocalDate(String string) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(string, formatter);
+
+        return localDate;
     }
 }
