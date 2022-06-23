@@ -9,7 +9,7 @@ import java.io.Serializable;
 * A Person
 * */
 @Entity
-@Table(name = "jhi_Person")
+@Table(name = "jhi_person")
 public class Person extends AbstractAuditingEntity implements Serializable {
     @Id
     @SequenceGenerator(sequenceName = "person_sequence", name = "person_sequence", allocationSize = 1)
