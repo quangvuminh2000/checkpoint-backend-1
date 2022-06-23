@@ -2,11 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Person;
 import com.mycompany.myapp.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,18 +16,48 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/{name}-{age}")
-    public Person getPerson(@PathVariable(name="name") String name, @PathVariable(name="age") Integer age) {
-        return personService.getPerson(name, age);
+    @GetMapping("/")
+    public Person getPerson(@RequestParam(name="name") String name, @RequestParam(name="age") Integer age) {
+        try {
+            return personService.getByNameAndAge(name, age);
+        } catch(RuntimeException notFound) {
+            System.err.println(notFound.getMessage());
+            return new Person("Notfound", 0);
+        }
     }
 
-    @GetMapping("/{name}-{age}/hello")
-    public List<String> sayHelloPerson(@PathVariable(name="name") String name, @PathVariable(name="age") Integer age) {
-        Person person = personService.getPerson(name, age);
-
-        return List.of(
-            "Hello, " + person.getName(),
-            "Your Age is " + person.getAge()
-        );
+    @GetMapping("/all")
+    public List<Person> getAllPeople() {
+        return personService.getPeople();
     }
+
+    @GetMapping("/hello/")
+    public List<String> sayHelloPerson(@RequestParam(name="name") String name, @RequestParam(name="age") Integer age) {
+        try {
+            Person person = personService.getByNameAndAge(name, age);
+
+            return List.of(
+                "Hello, " + person.getName(),
+                "Your Age is " + person.getAge()
+            );
+        } catch(RuntimeException notFound) {
+            System.err.println(notFound.getMessage());
+            return List.of(
+                "Person with name " + name,
+                "Age " + age,
+                "Cannot be found in the database"
+            );
+        }
+    }
+
+    @PostMapping("/create")
+    public void createNewPerson(@RequestBody Person person) {
+        personService.create(person);
+    }
+
+    @DeleteMapping("/delete")
+    public void deletePerson(@RequestParam String name, @RequestParam Integer age) {
+        personService.deleteFirstFoundByNameAndAge(name, age);
+    }
+
 }
