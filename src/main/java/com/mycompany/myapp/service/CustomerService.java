@@ -5,6 +5,7 @@ import com.mycompany.myapp.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,9 @@ public class CustomerService {
         return customerRepository.findAllByName(name);
     }
 
-    public List<Customer> getSameDob(LocalDate dob) {
+    public List<Customer> getSameDob(String dob_string) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dob = LocalDate.parse(dob_string, formatter);
         return customerRepository.findAllByDob(dob);
     }
 

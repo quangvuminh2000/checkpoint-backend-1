@@ -5,6 +5,7 @@ import com.mycompany.myapp.service.CustomerService;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Name;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,9 +44,7 @@ public class CustomerController {
     public List<Customer> getSameDobField(
         @RequestParam(name="dob") String dob_string
         ) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate dob = LocalDate.parse(dob_string, formatter);
-        return customerService.getSameDob(dob);
+        return customerService.getSameDob(dob_string);
     }
 
     @GetMapping("/same/city")
