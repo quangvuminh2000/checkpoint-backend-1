@@ -54,6 +54,14 @@ public class CustomerController {
         return customerService.getSameCity(city);
     }
 
+    @GetMapping("/same/city-dob")
+    public List<Customer> getSameCityAndDobField(
+        @RequestParam(name="city") String city,
+        @RequestParam(name="dob") String dob_string
+    ) {
+        return customerService.getSameCityAndDob(city, dob_string);
+    }
+
     /*Delete Methods*/
     @DeleteMapping("/delete")
     public void deleteCustomer(

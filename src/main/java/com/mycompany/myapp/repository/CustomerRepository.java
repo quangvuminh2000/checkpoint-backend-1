@@ -29,4 +29,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional
     @Query("DELETE FROM Customer c WHERE c.name = :name AND c.dob = :dob")
     void deleteByNameAndDob(String name, LocalDate dob);
+
+    @Query("SELECT c FROM Customer c WHERE c.city = :city AND c.dob = :dob")
+    List<Customer> findAllByCityAndDob(String city, LocalDate dob);
 }

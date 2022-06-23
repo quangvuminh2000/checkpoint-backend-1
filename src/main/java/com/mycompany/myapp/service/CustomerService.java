@@ -45,6 +45,11 @@ public class CustomerService {
         return customerRepository.findAllByCity(city);
     }
 
+    public List<Customer> getSameCityAndDob(String city, String dob_string) {
+        LocalDate dob = this.StringToLocalDate(dob_string);
+        return customerRepository.findAllByCityAndDob(city, dob);
+    }
+
     public void deleteFirstFoundByNameAndDob(String name, String dob_string) {
         LocalDate dob = this.StringToLocalDate(dob_string);
 
