@@ -11,6 +11,7 @@ import java.util.List;
 @Configuration
 public class PersonConfig {
 
+/*
     @Bean
     CommandLineRunner commandLineRunner(PersonRepository repository) {
         return args -> {
@@ -21,5 +22,6 @@ public class PersonConfig {
             repository.saveAll(List.of(henry, tony, minh));
         };
     }
+*/
 
 }
