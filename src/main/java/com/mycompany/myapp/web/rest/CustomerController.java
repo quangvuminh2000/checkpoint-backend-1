@@ -53,4 +53,13 @@ public class CustomerController {
     ) {
         return customerService.getSameCity(city);
     }
+
+    /*Delete Methods*/
+    @DeleteMapping("/delete")
+    public void deleteCustomer(
+        @RequestParam(name = "name") String name,
+        @RequestParam(name = "dob") String dob_string
+    ) {
+        customerService.deleteFirstFoundByNameAndDob(name, dob_string);
+    }
 }
