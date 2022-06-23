@@ -15,74 +15,74 @@ import java.time.Period;
 @Entity
 @Table(name = "jhi_customer")
 public class Customer extends AbstractAuditingEntity implements Serializable {
-    @Id
-    @SequenceGenerator(sequenceName = "customer_sequence", name = "customer_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_sequence")
-    private Long id;
+	@Id
+	@SequenceGenerator(sequenceName = "customer_sequence", name = "customer_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_sequence")
+	private Long id;
 
-    @Size(max = 100)
-    @Column(name = "name", length = 100)
-    private String name;
+	@Size(max = 100)
+	@Column(name = "name", length = 100)
+	private String name;
 
-    @Column(name = "dob")
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate dob;
+	@Column(name = "dob")
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private LocalDate dob;
 
-    @Size(max = 100)
-    @Column(name = "city", length = 100)
-    private String city;
+	@Size(max = 100)
+	@Column(name = "city", length = 100)
+	private String city;
 
-    @Transient
-    @Column(name = "age")
-    private Integer age;
+	@Transient
+	@Column(name = "age")
+	private Integer age;
 
-    public Customer(String name, LocalDate dob, String city) {
-        this.name = name;
-        this.dob = dob;
-        this.city = city;
-    }
+	public Customer(String name, LocalDate dob, String city) {
+		this.name = name;
+		this.dob = dob;
+		this.city = city;
+	}
 
-    public Customer() { }
+	public Customer() { }
 
-    /* Getter */
-    public Long getId() {
-        return id;
-    }
+	/* Getter */
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public LocalDate getDob() {
-        return dob;
-    }
+	public LocalDate getDob() {
+		return dob;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public Integer getAge() {
-        return Period.between(dob, LocalDate.now()).getYears();
-    }
+	public Integer getAge() {
+		return Period.between(dob, LocalDate.now()).getYears();
+	}
 
-    /* Setter */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/* Setter */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 }
