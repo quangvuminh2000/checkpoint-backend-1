@@ -1,6 +1,8 @@
 package com.mycompany.myapp.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -23,6 +25,7 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
     private String name;
 
     @Column(name = "dob")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dob;
 
     @Size(max = 100)
