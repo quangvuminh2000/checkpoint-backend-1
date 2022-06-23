@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 
 /*
  * A class to store Customer information
@@ -58,7 +59,7 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(dob, LocalDate.now()).getYears();
     }
 
     /* Setter */
