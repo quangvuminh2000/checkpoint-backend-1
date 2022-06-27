@@ -8,6 +8,7 @@ import com.mycompany.myapp.repository.request.PendingRequestRepository;
 import com.mycompany.myapp.repository.request.SubmittedRequestRepository;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class RequestService {
     private final CustomerRepository customerRepository;
     private final PendingRequestRepository pendingRequestRepository;
     private final SubmittedRequestRepository submittedRequestRepository;
+
+    private final Integer threshold = 15;
 
     public RequestService(CustomerRepository customerRepository, PendingRequestRepository pendingRequestRepository, SubmittedRequestRepository submittedRequestRepository) {
         this.customerRepository = customerRepository;
@@ -69,5 +72,30 @@ public class RequestService {
 
     public List<SubmittedRequest> findAllSubmittedRequests() {
         return submittedRequestRepository.findAll();
+    }
+
+    @Scheduled(fixedRate = 5000)
+    public void AutoRemoveInterval() {
+        // Refresh the status of all the requests
+        this.RefreshStatus();
+
+        List<PendingRequest> pendingRequests = pendingRequestRepository.findCreatedTimeSurpassThreshold();
+
+        System.out.println(pendingRequests.size());
+
+        if (pendingRequests.size() == 0) return;
+
+        for(PendingRequest pr : pendingRequests)
+            pendingRequestRepository.deleteByCustomerId(pr.getCustomerId());
+    }
+
+    private void RefreshStatus() {
+        List<PendingRequest> pendingRequests = pendingRequestRepository.findAll();
+
+        for (PendingRequest pr : pendingRequests)
+        {
+            boolean newStatus = pr.getStatus();
+            pendingRequestRepository.refreshCustomerStatus(newStatus, pr.getCustomerId());
+        }
     }
 }
